@@ -1,22 +1,19 @@
+
 /* eslint-disable @typescript-eslint/no-var-requires */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-const express = require('express');
-const dotenv = require('dotenv');
-const cors = require('cors');
-const { json, urlencoded } = require("express");
 
-if (process.env.NODE_ENV !== "production") {
-    require("dotenv").config();
-}
+import express, { Express, Request, Response } from "express";
+import dotenv from "dotenv";
 
-const app =  express()
-app.use(cors())
+dotenv.config();
 
-app.set("port", process.env.PORT || 3000)
-app.listen(app.get("port"), () => {
-    console.log(`Server on port ${app.get("port")}`)
-})
+const app: Express = express();
+const port = process.env.PORT || 3000;
 
-//Middleware
-app.use(express.json())
-app.use(express.urlencoded({extended: false}))
+app.get("/", (req: Request, res: Response) => {
+    res.send("Express + TypeScript Server");
+});
+
+app.listen(port, () => {
+    console.log(`[server]: Server is running at http://localhost:${port}`);
+});
