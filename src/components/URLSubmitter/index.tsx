@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { URLResult } from '../../models/url.models'
+import './styles.sass';
 
 const URLSubmitter = () => {
     const [url, setUrl] = useState('');
@@ -28,7 +29,7 @@ const URLSubmitter = () => {
     };
 
     return (
-        <div>
+        <div className='UrlSubmitterContainer'>
             <input
                 type="text"
                 value={url}
