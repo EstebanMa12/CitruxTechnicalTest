@@ -22,12 +22,3 @@ app.listen(port, () => {
     console.log(`[server]: Server is running at http://localhost:${port}`);
 });
 
-import ArticleModel from "../models/queries";
-
-const article = new ArticleModel({
-    content: "This is a test article",
-    url: "test-article",
-    createdAt: new Date()
-});
-
-console.log(article)
