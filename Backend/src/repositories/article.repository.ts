@@ -15,7 +15,7 @@ export const createArticle = async (url: string, content: string) => {
 
 export const getArticles = async () => {
     try {
-        const articles = await ArticleModel.find();
+        const articles = await ArticleModel.find().populate("chatHistory");
         return articles;
     } catch (error) {
         console.error("[repository]: Error getting articles");
