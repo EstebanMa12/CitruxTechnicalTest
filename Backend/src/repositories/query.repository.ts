@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import QueryModel from "../models/query";
 
-export const createQuerie = async (userQuestion: string, aiResponse: string, article: string) => {
+export const createQuery = async (userQuestion: string, aiResponse: string, article: string) => {
     try {
         const querie = new QueryModel({ userQuestion, aiResponse, article });
         await querie.save();
@@ -23,7 +23,7 @@ export const getQueries = async () => {
     }
 }
 
-export const deleteQuerie = async (id: string) => {
+export const deleteQuery = async (id: string) => {
     try {
         const querie = await QueryModel.findByIdAndDelete(id);
         return querie;
