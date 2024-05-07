@@ -7,12 +7,15 @@ import dotenv from "dotenv";
 
 import routes from "../config/routes/routes";
 
+const cors = require('cors')
+
 //MONGO
 import {connect} from "../config/database/mongoConfig";
 
 dotenv.config();
 
 const app: Express = express();
+app.use(cors())
 const port = process.env.PORT || 3000;
 connect()
 

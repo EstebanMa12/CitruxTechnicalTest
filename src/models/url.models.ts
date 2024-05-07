@@ -1,5 +1,7 @@
 export interface URLResult {
     url: string;
-    shortUrl: string;
+    content: string;
+    createdAt: string;
+    _id: string;
 }
 

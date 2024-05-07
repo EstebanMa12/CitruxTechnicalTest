@@ -1,12 +1,16 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useState } from 'react';
 import { URLResult } from '../../models/url.models'
 import './styles.sass';
+import axios from 'axios';
 
 const URLSubmitter = () => {
     const [url, setUrl] = useState('');
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
     const [result, setResult] = useState<URLResult | null>(null);
+
+    const apiUrl = "http://localhost:4000/api/v1";
 
     const submit = async () => {
         if (!url) {
@@ -18,10 +22,17 @@ const URLSubmitter = () => {
         setLoading(true);
 
         try {
-            const response = await fetch(`/api/submit?url=${encodeURIComponent(url)}`);
-            const data = await response.json();
-            setResult(data);
+            const response = await axios.post<URLResult>(`${apiUrl}/article`, 
+                { url }, // Add curly braces around the 'url' parameter
+                { 
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                }
+            );
+            setResult(response.data);
         } catch (e) {
+            console.error(e);
             setError('An error occurred');
         }
 
@@ -52,7 +63,7 @@ const URLSubmitter = () => {
             {result && (
                 <div>
                     <div>URL: {result.url}</div>
-                    <div>Short URL: {result.shortUrl}</div>
+                    <div>Short URL: {result.content}</div>
                 </div>
             )}
         </div>
