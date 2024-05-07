@@ -1,5 +1,5 @@
-import { prop, getModelForClass, Ref } from '@typegoose/typegoose';
-import { Query } from './query'; // Import the Query type from the appropriate module
+import { prop, getModelForClass} from '@typegoose/typegoose';
+// import { Query } from './query'; 
 
 export class IArticle {
     @prop({ required: true, trim: true })
@@ -11,9 +11,8 @@ export class IArticle {
     @prop({ required: true })
     createdAt!: Date;
 
-    // Optionally, if you want to reference the chat history directly
-    @prop({ ref: () => Query })
-    chatHistory!: Ref<Query>[];
+    // @prop({ ref: () => Query })
+    // chatHistory!: Ref<Query>[];
 }
 
 const ArticleModel = getModelForClass(IArticle);

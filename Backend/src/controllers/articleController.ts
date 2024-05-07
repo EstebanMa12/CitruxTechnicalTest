@@ -9,7 +9,7 @@ import * as cheerio from 'cheerio';
 
 const openai = new OpenAI({
     organization: process.env.ORGANIZATION,
-    apiKey: process.env.OPENAI_API_KEY
+    apiKey: "sk-proj-FMdPY88O3CRjI2SsXjDqT3BlbkFJ9FF54fKsLyJcakJenyH8"
 });
 
 export const createArticleController = async (req: Request, res: Response) => {

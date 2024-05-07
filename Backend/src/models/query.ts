@@ -8,7 +8,7 @@ export class Query {
     @prop({ required: true })
     aiResponse!: string;
 
-    @prop({ required: true, ref: () => IArticle})
+    @prop({ ref: () => IArticle})
     article!: Ref<IArticle>;
 }
 
