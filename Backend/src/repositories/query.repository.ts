@@ -1,9 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import QueryModel from "../models/query";
+import { userQuestion } from "../models/query";
 
-export const createQuery = async (userQuestion: string, aiResponse: string, article: string) => {
+export const createQuery = async (userQuestions: userQuestion[], aiResponse: string, articleId: string) => {
     try {
-        const querie = new QueryModel({ userQuestion, aiResponse, article });
+        const querie = new QueryModel({ userQuestions, aiResponse, articleId });
         await querie.save();
         return querie;
     } catch (error) {

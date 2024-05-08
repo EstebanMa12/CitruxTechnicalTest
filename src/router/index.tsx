@@ -1,10 +1,10 @@
 import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
-import URLSubmitter from '../components/URLSubmitter';
+import Home from '../pages/Home';
 const AppRouter = () => {
     return (
         <Router>
             <Routes>
-                <Route path="/" element={<URLSubmitter />} />
+                <Route path="/" element={<Home />} />
             </Routes>
         </Router>
     );

@@ -8,11 +8,12 @@ export class IArticle {
     @prop({ required: true })
     content!: string;
 
+    @prop({required: true})
+    summary!: string;
+
     @prop({ required: true })
     createdAt!: Date;
 
-    // @prop({ ref: () => Query })
-    // chatHistory!: Ref<Query>[];
 }
 
 const ArticleModel = getModelForClass(IArticle);

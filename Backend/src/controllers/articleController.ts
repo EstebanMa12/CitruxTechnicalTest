@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { createArticleService, deleteArticleService, getArticlesService } from './../services/article-service';
+import { createArticleService, deleteArticleService, getArticlesService, getArticleService} from './../services/article-service';
 
 import { Request, Response } from 'express';
 import OpenAI from "openai";
@@ -9,7 +9,7 @@ import * as cheerio from 'cheerio';
 
 const openai = new OpenAI({
     organization: process.env.ORGANIZATION,
-    apiKey: "sk-proj-FMdPY88O3CRjI2SsXjDqT3BlbkFJ9FF54fKsLyJcakJenyH8"
+    apiKey: "sk-proj-KjFFQROJH7wQ5av0DI7gT3BlbkFJfeDpx0IaBwBG0svAHeKY"
 });
 
 export const createArticleController = async (req: Request, res: Response) => {
@@ -38,7 +38,7 @@ export const createArticleController = async (req: Request, res: Response) => {
             ]
         });
 
-        const responseArticle = await createArticleService(url, article.choices[0].message.content!);
+        const responseArticle = await createArticleService(url, content, article.choices[0].message.content!);
         res.status(200).json(responseArticle);
     } catch (error) {
         console.error("[controller]: Error creating article", error);
@@ -64,5 +64,16 @@ export const deleteArticleController = async (req: Request, res: Response) => {
     } catch (error) {
         console.error("[controller]: Error deleting article", error);
         res.status(500).json({ message: "Error deleting article" });
+    }
+}
+
+export const getArticleController = async (req: Request, res: Response) => {
+    const { id } = req.params;
+    try {
+        const response = await getArticleService(id);
+        res.status(200).json(response);
+    } catch (error) {
+        console.error("[controller]: Error getting article", error);
+        res.status(500).json({ message: "Error getting article" });
     }
 }

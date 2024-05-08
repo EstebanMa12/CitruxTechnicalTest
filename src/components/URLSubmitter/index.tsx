@@ -23,7 +23,7 @@ const URLSubmitter = () => {
 
         try {
             const response = await axios.post<URLResult>(`${apiUrl}/article`, 
-                { url }, // Add curly braces around the 'url' parameter
+                { url }, 
                 { 
                     headers: {
                         'Content-Type': 'application/json'
