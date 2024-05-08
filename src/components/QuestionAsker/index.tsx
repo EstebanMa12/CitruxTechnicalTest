@@ -25,26 +25,7 @@ const QuestionAsker: React.FC = () => {
     setChats(msgs);
 
     setMessage("");
-
-    fetch("http://localhost:4000/api/v1/query", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        chats,
-      }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        msgs.push(data.output);
-        setChats(msgs);
-        setIsTyping(false);
-        window.scrollTo(0, document.body.scrollHeight);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    
   };
 
   return (
