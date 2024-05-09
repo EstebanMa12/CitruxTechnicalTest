@@ -7,9 +7,12 @@ import OpenAI from "openai";
 import axios from 'axios';
 import * as cheerio from 'cheerio';
 
+import dotenv from "dotenv";
+
+dotenv.config()
+
 const openai = new OpenAI({
-    organization: process.env.ORGANIZATION,
-    apiKey: "sk-proj-KjFFQROJH7wQ5av0DI7gT3BlbkFJfeDpx0IaBwBG0svAHeKY"
+    apiKey: process.env.OPENAI_API_KEY
 });
 
 export const createArticleController = async (req: Request, res: Response) => {
