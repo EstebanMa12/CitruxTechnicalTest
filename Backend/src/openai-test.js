@@ -4,11 +4,16 @@
 const OpenAI = require("openai");
 const cheerio = require("cheerio");
 const axios = require("axios");
+const dotenv = require('dotenv');
 
-require('dotenv').config()
+(async () => {
+    await dotenv.config();
+    console.log( '1',process.env.OPENAI_API_KEY_2); // Ahora puedes acceder a las variables de entorno
+    console.log( '2',process.env.PORT); // Ahora puedes acceder a las variables de entorno
+  })();
 
-console.log(process.env.OPENAI_API_KEY)
-console.log(process.env.MONGO_DB_URI)
+console.log('3',process.env.OPENAI_API_KEY_2)
+console.log('4',process.env)
 
 const openai = new OpenAI({
     apiKey: process.env.OPENAI_API_KEY
