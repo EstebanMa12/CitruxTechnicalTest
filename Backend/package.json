@@ -10,6 +10,7 @@
   "license": "MIT",
   "dependencies": {
     "@typegoose/typegoose": "^12.4.0",
+    "axios": "^1.6.8",
     "cheerio": "^1.0.0-rc.12",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
