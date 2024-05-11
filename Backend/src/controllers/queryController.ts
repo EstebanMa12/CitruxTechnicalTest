@@ -34,17 +34,16 @@ export const createQueryController = async (req: Request, res: Response) => {
             ],
             model: "gpt-3.5-turbo"
         })
-        console.log(airesponse)
         const response = await createQueryService(
             userQuestion, {
             role: "CitruxSystem",
             content: airesponse.choices[0].message.content!
         }, articleId);
-        
+
         res.status(200).json(response);
-    } catch (error) {
-        console.error("[controller]: Error creating query", error);
-        res.status(500).json({ message: "Error creating query" });
+    } catch (error: any) {
+        console.error("[controller]: Error creating query");
+        res.status(error.status).json({ message: error.error.message });
     }
 
 }
@@ -53,9 +52,10 @@ export const getQueriesController = async (req: Request, res: Response) => {
     try {
         const response = await getQueriesService();
         res.status(200).json(response);
-    } catch (error) {
-        console.error("[controller]: Error getting queries", error);
-        res.status(500).json({ message: "Error getting queries" });
+    } catch (error: any) {
+        console.error("[controller]: Error getting queries");
+        res.status(error.status).json({ message: error.error.message });
+
     }
 }
 
@@ -64,9 +64,10 @@ export const deleteQueryController = async (req: Request, res: Response) => {
     try {
         const response = await deleteQueryService(id);
         res.status(200).json(response);
-    } catch (error) {
+    } catch (error: any) {
         console.error("[controller]: Error deleting querie", error);
-        res.status(500).json({ message: "Error deleting querie" });
+        res.status(error.status).json({ message: error.error.message });
+
     }
 }
 
@@ -75,9 +76,8 @@ export const getQueriesByArticleIdController = async (req: Request, res: Respons
     try {
         const response = await getQueriesByArticleIdService(articleId);
         res.status(200).json(response)
-    } catch (error) {
+    } catch (error: any) {
         console.error("[controller]: Error getting queries by articleId", error);
-        res.status(500).json({ message: "Error getting queries by articleId" });
-
+        res.status(error.status).json({ message: error.error.message });
     }
 }

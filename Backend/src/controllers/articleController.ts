@@ -21,7 +21,11 @@ export const createArticleController = async (req: Request, res: Response) => {
         const response = await axios.get(url);
         const $ = cheerio.load(response.data);
         const title = $('title').text();
-        const content = $('p').text();
+        let content = $('p').text();
+
+        if (content.length > 16000) {
+            content = content.substring(0, 16000);
+        }
 
         const article = await openai.chat.completions.create({
             model: "gpt-3.5-turbo",
@@ -43,9 +47,9 @@ export const createArticleController = async (req: Request, res: Response) => {
 
         const responseArticle = await createArticleService(url, content, article.choices[0].message.content!);
         res.status(200).json(responseArticle);
-    } catch (error) {
-        console.error("[controller]: Error creating article", error);
-        res.status(500).json({ message: "Error creating article" });
+    } catch (error:any) {
+        console.error("[controller]: Error creating article");
+        res.status(error.status).json({ message: error.error.message });
     }
 }
 
@@ -53,9 +57,9 @@ export const getArticlesController = async (req: Request, res: Response) => {
     try {
         const response = await getArticlesService();
         res.status(200).json(response);
-    } catch (error) {
-        console.error("[controller]: Error getting articles", error);
-        res.status(500).json({ message: "Error getting articles" });
+    } catch (error:any) {
+        console.error("[controller]: Error getting articles");
+        res.status(error.status).json({ message: error.error.message });
     }
 }
 
@@ -64,9 +68,9 @@ export const deleteArticleController = async (req: Request, res: Response) => {
     try {
         const response = await deleteArticleService(id);
         res.status(200).json(response);
-    } catch (error) {
-        console.error("[controller]: Error deleting article", error);
-        res.status(500).json({ message: "Error deleting article" });
+    } catch (error:any) {
+        console.error("[controller]: Error deleting article");
+        res.status(error.status).json({ message: error.error.message });
     }
 }
 

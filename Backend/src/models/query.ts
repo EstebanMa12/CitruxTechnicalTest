@@ -2,7 +2,9 @@ import { prop, getModelForClass, Ref} from '@typegoose/typegoose';
 import { IArticle } from './article';
 
 export class questionResponse{
+    @prop()
     role!: string;
+    @prop()
     content!: string;
 }
 

@@ -24,9 +24,13 @@ const QuestionAsker: React.FC = () => {
   const { _id: articleIdProp } = useSelector((state: any) => state.article);
 
   useEffect(() => {
-    if(queries){
-      dispatch(getQuerybyArticleId(articleIdProp));
+    const fetchQuery = async () => {
+      if(queries && articleIdProp){
+        await dispatch(getQuerybyArticleId(articleIdProp));
+      }
     }
+
+    fetchQuery();
   }, [queries, dispatch, articleIdProp]);
 
   const submit = (event: any) => {
@@ -83,19 +87,19 @@ const QuestionAsker: React.FC = () => {
               <section key={index}>
                 <p
                   className={
-                    chat.userQuestion[0].role === "user" ? "user_msg" : ""
+                    chat.userQuestion.role === "user" ? "user_msg" : ""
                   }
                 >
                   <span>
-                    <b>{chat.userQuestion[0].role.toUpperCase()}</b>
+                    <b>{chat.userQuestion.role.toUpperCase()}</b>
                   </span>
                   <span>:</span>
-                  <span>{chat.userQuestion[0].content}</span>
+                  <span>{chat.userQuestion.content}</span>
                 </p>
                 <p>
                   {/* <p className={chat.aiResponse.role === "assistant" ? "assistant_msg" : ""}> */}
                   <span>:</span>
-                  <span>{chat.aiResponse}</span>
+                  <span>{chat.aiResponse.content}</span>
                 </p>
               </section>
             ))
