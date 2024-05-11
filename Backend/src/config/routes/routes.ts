@@ -11,7 +11,8 @@ import {
 import {
     createQueryController,
     deleteQueryController,
-    getQueriesController
+    getQueriesController,
+    getQueriesByArticleIdController,
 } from '../../controllers/queryController'
 
 
@@ -24,5 +25,6 @@ routes.get('/article/:id', getArticleController);
 routes.post('/query', createQueryController);
 routes.get('/queries', getQueriesController);
 routes.delete('/query/:id', deleteQueryController);
+routes.get('/queries/:articleId', getQueriesByArticleIdController);
 
 export default routes;

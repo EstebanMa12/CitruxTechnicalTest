@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
-import { createQueryService, getQueriesService, deleteQueryService } from "../services/query-service";
+import { createQueryService, getQueriesService, deleteQueryService, getQueriesByArticleIdService } from "../services/query-service";
 import { getArticleService } from "../services/article-service";
 import { Request, Response } from 'express';
 import OpenAI from "openai";
@@ -61,5 +61,17 @@ export const deleteQueryController = async (req: Request, res: Response) => {
     } catch (error) {
         console.error("[controller]: Error deleting querie", error);
         res.status(500).json({ message: "Error deleting querie" });
+    }
+}
+
+export const getQueriesByArticleIdController = async (req: Request, res:Response)=>{
+    const {articleId} = req.params;
+    try {
+        const response = await getQueriesByArticleIdService(articleId);
+        res.status(200).json(response)
+    } catch (error) {
+        console.error("[controller]: Error getting queries by articleId", error);
+        res.status(500).json({ message: "Error getting queries by articleId" });
+        
     }
 }

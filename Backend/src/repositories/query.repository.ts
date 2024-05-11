@@ -33,3 +33,13 @@ export const deleteQuery = async (id: string) => {
         console.error(error);
     }
 }
+
+export const getQueriesByArticleId = async (articleId : string) =>{
+    try {
+        const queries = await QueryModel.find({articleId});
+        return queries;
+    } catch (error) {
+        console.error("[repository]: Error getting queries by articleId");
+        console.error(error);
+    }
+}

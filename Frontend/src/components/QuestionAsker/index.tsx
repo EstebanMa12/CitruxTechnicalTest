@@ -1,58 +1,106 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import React, { useState, FormEvent } from "react";
-import "./styles.sass";
-import axios from "axios";
+import React, { useState, FormEvent, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getQuerybyArticleId, sendQuery } from "../../redux/queries/queryThunks";
 
-interface ChatMessage {
-  role: string;
-  content: string;
-}
+import "./styles.sass";
+
+// interface ChatMessage {
+//   role: string;
+//   content: string;
+// }
 
 const QuestionAsker: React.FC = () => {
   const [message, setMessage] = useState<string>("");
-  const [chats, setChats] = useState<ChatMessage[]>([]);
-  const [isTyping, setIsTyping] = useState<boolean>(false);
+  // const [chats, setChats] = useState<ChatMessage[]>([]);
+  // const [isTyping, setIsTyping] = useState<boolean>(false);
 
-  const chat = async (e: FormEvent<HTMLFormElement>, message: string) => {
-    e.preventDefault();
+  const dispatch = useDispatch();
+  const { loading, error, queries } = useSelector((state: any) => state.query);
+  const { _id: articleIdProp } = useSelector((state: any) => state.article);
+  useEffect(() => {
+    dispatch(getQuerybyArticleId(articleIdProp));
+  }, [dispatch, articleIdProp]);
 
-    if (!message) return;
-    setIsTyping(true);
-    window.scrollTo(0, document.body.scrollHeight);
+  const submit = (event:any) =>{
+    event.preventDefault();
+    dispatch(sendQuery(
+    [
+            {
+              role: "user",
+              content: message,
+            },
+          ], articleIdProp))
+  }
 
-    const msgs = chats;
-    msgs.push({ role: "user", content: message });
-    setChats(msgs);
+  // const makeQuery = async (message: any) => {
+  // try{  axios
+  //     .post("http://localhost:4000/api/v1/query", {
+  //       userQuestions: [
+  //         {
+  //           role: "user",
+  //           content: message,
+  //         },
+  //       ],
+  //     })
+  //   }catch(error){
 
-    setMessage("");
-    
-  };
+  //   }
+
+  // };
+
+  // const chat = async (e: FormEvent<HTMLFormElement>, message: string) => {
+  //   e.preventDefault();
+
+  //   if (!message) return;
+  //   setIsTyping(true);
+  //   window.scrollTo(0, document.body.scrollHeight);
+
+  //   const msgs = chats;
+  //   msgs.push({ role: "user", content: message });
+  //   setChats(msgs);
+
+  //   setMessage("");
+
+  // };
 
   return (
     <main className="Question_container">
       <h1>Summarizer Assistant</h1>
 
       <section>
-        {chats && chats.length
-          ? chats.map((chat, index) => (
-              <p key={index} className={chat.role === "user" ? "user_msg" : ""}>
-                <span>
-                  <b>{chat.role.toUpperCase()}</b>
-                </span>
-                <span>:</span>
-                <span>{chat.content}</span>
-              </p>
+        {queries && queries.length
+          ? queries.map((chat: any, index: string | number) => (
+              <section key={index}>
+                <p
+                  className={
+                    chat.userQuestions[0].role === "user" ? "user_msg" : ""
+                  }
+                >
+                  <span>
+                    <b>{chat.userQuestions[0].role.toUpperCase()}</b>
+                  </span>
+                  <span>:</span>
+                  <span>{chat.userQuestions[0].content}</span>
+                </p>
+                <p>
+                  {/* <p className={chat.aiResponse.role === "assistant" ? "assistant_msg" : ""}> */}
+                  <span>:</span>
+                  <span>{chat.aiResponse}</span>
+                </p>
+              </section>
             ))
           : ""}
       </section>
 
-      <div className={isTyping ? "" : "hide"}>
+      {/* <div className={isTyping ? "" : "hide"}>
         <p>
           <i>{isTyping ? "Typing" : ""}</i>
         </p>
-      </div>
+      </div> */}
 
-      <form action="" onSubmit={(e) => chat(e, message)}>
+      <form action="" onSubmit={submit}>
         <input
           type="text"
           name="message"

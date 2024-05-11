@@ -7,6 +7,7 @@ const articleSlice = createSlice({
         content: null,
         summary: null,
         _id: null,
+        error: null,
     },
     reducers: {
         setArticle: (state, action) => {
@@ -14,8 +15,13 @@ const articleSlice = createSlice({
             state.content = action.payload.content;
             state.summary = action.payload.summary;
             state._id = action.payload._id;
+            state.error = null;
         },
+        setError : (state, action) =>{
+            state.error = action.payload;
+        }
     },
 });
 
-export const { setArticle } = articleSlice.actions;
+export const { setArticle, setError } = articleSlice.actions;
+export default articleSlice.reducer;

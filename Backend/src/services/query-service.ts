@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { createQuery, getQueries, deleteQuery } from "../repositories/query.repository";
+import { createQuery, getQueries, deleteQuery, getQueriesByArticleId } from "../repositories/query.repository";
 import { userQuestion } from "../models/query";
 
 export const createQueryService = async (userQuestions: userQuestion[], aiResponse: string, articleId: string) => {
@@ -28,6 +28,16 @@ export const deleteQueryService = async (id: string) => {
         return querie;
     } catch (error) {
         console.error("[service]: Error deleting querie");
+        console.error(error);
+    }
+}
+
+export const getQueriesByArticleIdService = async (articleId: string) => {
+    try {
+        const queries = getQueriesByArticleId(articleId)
+        return queries
+    } catch (error) {
+        console.error("[service]: Error getting queries by articleId ")
         console.error(error);
     }
 }
