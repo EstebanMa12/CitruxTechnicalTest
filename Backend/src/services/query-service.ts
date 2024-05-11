@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { createQuery, getQueries, deleteQuery, getQueriesByArticleId } from "../repositories/query.repository";
-import { userQuestion } from "../models/query";
+import { questionResponse } from "../models/query";
 
-export const createQueryService = async (userQuestions: userQuestion[], aiResponse: string, articleId: string) => {
+export const createQueryService = async (userQuestion: questionResponse, aiResponse: questionResponse, articleId: string) => {
     try {
-        const querie = createQuery(userQuestions, aiResponse, articleId);
+        const querie = createQuery(userQuestion, aiResponse, articleId);
         return querie;
     } catch (error) {
         console.error("[service]: Error creating querie");

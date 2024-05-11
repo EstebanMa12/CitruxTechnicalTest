@@ -2,7 +2,10 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState, FormEvent, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getQuerybyArticleId, sendQuery } from "../../redux/queries/queryThunks";
+import {
+  getQuerybyArticleId,
+  sendQuery,
+} from "../../redux/queries/queryThunks";
 
 import "./styles.sass";
 
@@ -19,20 +22,25 @@ const QuestionAsker: React.FC = () => {
   const dispatch = useDispatch();
   const { loading, error, queries } = useSelector((state: any) => state.query);
   const { _id: articleIdProp } = useSelector((state: any) => state.article);
-  useEffect(() => {
-    dispatch(getQuerybyArticleId(articleIdProp));
-  }, [dispatch, articleIdProp]);
 
-  const submit = (event:any) =>{
+  useEffect(() => {
+    if(queries){
+      dispatch(getQuerybyArticleId(articleIdProp));
+    }
+  }, [queries, dispatch, articleIdProp]);
+
+  const submit = (event: any) => {
     event.preventDefault();
-    dispatch(sendQuery(
-    [
-            {
-              role: "user",
-              content: message,
-            },
-          ], articleIdProp))
-  }
+    dispatch(
+      sendQuery(
+        {
+          role: "user",
+          content: message,
+        },
+        articleIdProp
+      )
+    );
+  };
 
   // const makeQuery = async (message: any) => {
   // try{  axios
@@ -75,14 +83,14 @@ const QuestionAsker: React.FC = () => {
               <section key={index}>
                 <p
                   className={
-                    chat.userQuestions[0].role === "user" ? "user_msg" : ""
+                    chat.userQuestion[0].role === "user" ? "user_msg" : ""
                   }
                 >
                   <span>
-                    <b>{chat.userQuestions[0].role.toUpperCase()}</b>
+                    <b>{chat.userQuestion[0].role.toUpperCase()}</b>
                   </span>
                   <span>:</span>
-                  <span>{chat.userQuestions[0].content}</span>
+                  <span>{chat.userQuestion[0].content}</span>
                 </p>
                 <p>
                   {/* <p className={chat.aiResponse.role === "assistant" ? "assistant_msg" : ""}> */}

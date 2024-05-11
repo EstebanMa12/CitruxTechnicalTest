@@ -15,7 +15,7 @@ const URLSubmitter = () => {
 
 
     const dispatch = useDispatch();
-    const { summary} = useSelector((state: any) => state.article)
+    const {summary} = useSelector((state: any) => state.article)
     
 
 

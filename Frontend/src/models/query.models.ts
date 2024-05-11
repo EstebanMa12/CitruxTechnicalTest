@@ -1,6 +1,11 @@
+
+export interface questionResponse {
+    role: string,
+    content: string
+}
 export interface queryModel {
-    userQuestions: [],
-    aiResponse: string,
+    userQuestion: questionResponse,
+    aiResponse: questionResponse,
     articleId: string,
     _id: string,
 }

@@ -17,7 +17,7 @@ const openai = new OpenAI({
 
 export const createQueryController = async (req: Request, res: Response) => {
 
-    const { userQuestions, articleId } = req.body;
+    const { userQuestion, articleId } = req.body;
     try {
 
         const article = await getArticleService(articleId);
@@ -30,11 +30,17 @@ export const createQueryController = async (req: Request, res: Response) => {
                 role: "system",
                 content: `You are a helpful assistant for an article about ${article?.content}`
             },
-            ...userQuestions,
-        ],
+                userQuestion,
+            ],
             model: "gpt-3.5-turbo"
         })
-        const response = await createQueryService(userQuestions, airesponse.choices[0].message.content!, articleId);
+        console.log(airesponse)
+        const response = await createQueryService(
+            userQuestion, {
+            role: "CitruxSystem",
+            content: airesponse.choices[0].message.content!
+        }, articleId);
+        
         res.status(200).json(response);
     } catch (error) {
         console.error("[controller]: Error creating query", error);
@@ -64,14 +70,14 @@ export const deleteQueryController = async (req: Request, res: Response) => {
     }
 }
 
-export const getQueriesByArticleIdController = async (req: Request, res:Response)=>{
-    const {articleId} = req.params;
+export const getQueriesByArticleIdController = async (req: Request, res: Response) => {
+    const { articleId } = req.params;
     try {
         const response = await getQueriesByArticleIdService(articleId);
         res.status(200).json(response)
     } catch (error) {
         console.error("[controller]: Error getting queries by articleId", error);
         res.status(500).json({ message: "Error getting queries by articleId" });
-        
+
     }
 }

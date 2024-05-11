@@ -1,20 +1,23 @@
 import { prop, getModelForClass, Ref} from '@typegoose/typegoose';
 import { IArticle } from './article';
 
-export class userQuestion{
+export class questionResponse{
     role!: string;
     content!: string;
 }
 
 export class Query {
     @prop({ required: true })
-    userQuestions!: userQuestion[];
+    userQuestion!: questionResponse;
 
     @prop({ required: true })
-    aiResponse!: string;
+    aiResponse!: questionResponse;
 
     @prop({ ref: () => IArticle})
     articleId!: Ref<IArticle>;
+
+    @prop({ required: true })
+    createdAt!: Date;
 }
 
 const QueryModel = getModelForClass(Query);
