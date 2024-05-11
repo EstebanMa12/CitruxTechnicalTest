@@ -98,6 +98,9 @@ const QuestionAsker: React.FC = () => {
                 </p>
                 <p>
                   {/* <p className={chat.aiResponse.role === "assistant" ? "assistant_msg" : ""}> */}
+                  <span>
+                    <b>{chat.aiResponse.role.toUpperCase()}</b>
+                  </span>
                   <span>:</span>
                   <span>{chat.aiResponse.content}</span>
                 </p>
