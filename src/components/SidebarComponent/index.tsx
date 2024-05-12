@@ -1,8 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { Sidebar, Menu, MenuItem, SubMenu } from "react-pro-sidebar";
+import { Sidebar, Menu, MenuItem} from "react-pro-sidebar";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 import { getArticles } from "../../redux/articles/articlesThunks";
 import "./styles.sass";
@@ -33,9 +34,11 @@ const SidebarComponent = () => {
         <section className="historial_container">
           {articles &&
             articles.map((article: any) => (
-              <MenuItem key={article._id}>
-                {article.url.substring(0, 25)}
-              </MenuItem>
+              <Link to={`/article/${article._id}`} key={article._id}>
+                  <MenuItem >
+                    {article.url.substring(0, 25)}
+                  </MenuItem>
+              </Link>
             ))}
         </section>
         <div className="buttons">
