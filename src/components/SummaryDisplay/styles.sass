@@ -39,3 +39,52 @@
     clear: both
     &:hover
         box-shadow: 0 0 10px 0 rgba(0,0,0,0.2)
+
+.chat_container
+    margin-top: 1rem
+    overflow-y: auto
+    &::-webkit-scrollbar
+        width: 5px
+    &::-webkit-scrollbar-track
+        background: #f1f1f1
+
+    &::-webkit-scrollbar-thumb
+        background: #7c69b0
+
+    &::-webkit-scrollbar-thumb:hover
+        background: #53457b
+
+.summary_container
+    display: flex
+    justify-content: center
+    align-items: center
+    margin-bottom: 1rem
+    padding: 0.7rem
+    border-radius: 5px
+    box-shadow: 0 0 5px 0 rgba(0,0,0,0.2)
+
+.form_container
+    display: flex
+    justify-content: center
+    align-items: center
+    margin-top: 1rem
+    padding: 0.7rem
+    border-radius: 5px
+
+.input_field
+    &::placeholder
+        font-size: 0.7rem
+        font-weight: 400
+        font-family: 'Roboto', sans-serif
+
+.header
+    display: flex
+    justify-content: space-between
+    align-items: center
+.delete_button
+    cursor: pointer
+    color: #ffffff
+    background-color: #f55
+    font-size: 1rem
+    &:hover
+        background-color: #f00

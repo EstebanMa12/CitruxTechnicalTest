@@ -4,7 +4,9 @@ import { Sidebar, Menu, MenuItem} from "react-pro-sidebar";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
+import ArrowRightOutlinedIcon from '@mui/icons-material/ArrowRightOutlined';
+import MenuOpenOutlinedIcon from '@mui/icons-material/MenuOpenOutlined';
+import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
 
 import { getArticles } from "../../redux/articles/articlesThunks";
 import "./styles.sass";
@@ -29,14 +31,19 @@ const SidebarComponent = () => {
   return (
     <Sidebar className="SidebarComponent" collapsed={collapsed}>
       <Menu>
-        <MenuItem onClick={toggleSidebar}>Home</MenuItem>
+        <MenuItem
+        icon={<MenuOpenOutlinedIcon />}
+        onClick={toggleSidebar}>
+          Historial
+        </MenuItem>
 
-        <h1>Historial</h1>
         <section className="historial_container">
           {articles &&
             articles.map((article: any) => (
-              <Link to={`/article/${article._id}`} key={article._id}>
-                  <MenuItem >
+              <Link className="article_link" to={`/article/${article._id}`} key={article._id}>
+                  <MenuItem
+                    icon={<ArrowRightOutlinedIcon />} 
+                  >
                     {article.url.substring(0, 25)}
                   </MenuItem>
               </Link>
@@ -44,14 +51,18 @@ const SidebarComponent = () => {
         </section>
         <div className="buttons">
           <Link to={"/"}>
-            <button className="btn">
-              <span></span>
-              <p
-                data-start="good luck!"
-                data-text="start!"
-                data-title="new summary"
-              ></p>
-            </button>
+            <MenuItem
+            icon={<AddCircleOutlineOutlinedIcon />}
+            >
+              <button className="btn">
+                <span></span>
+                <p
+                  data-start="good luck!"
+                  data-text="start!"
+                  data-title="new summary"
+                ></p>
+              </button>
+            </MenuItem>
           </Link>
         </div>
       </Menu>
