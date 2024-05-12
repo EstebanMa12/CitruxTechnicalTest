@@ -4,6 +4,7 @@ import { Sidebar, Menu, MenuItem} from "react-pro-sidebar";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 
 import { getArticles } from "../../redux/articles/articlesThunks";
 import "./styles.sass";
@@ -42,14 +43,16 @@ const SidebarComponent = () => {
             ))}
         </section>
         <div className="buttons">
-          <button className="btn">
-            <span></span>
-            <p
-              data-start="good luck!"
-              data-text="start!"
-              data-title="new summary"
-            ></p>
-          </button>
+          <Link to={"/"}>
+            <button className="btn">
+              <span></span>
+              <p
+                data-start="good luck!"
+                data-text="start!"
+                data-title="new summary"
+              ></p>
+            </button>
+          </Link>
         </div>
       </Menu>
     </Sidebar>

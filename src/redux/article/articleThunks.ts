@@ -1,15 +1,17 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { URLResult } from "../../models/url.models";
+import { articleModel } from "../../models/article.models";
 import axios from 'axios'
-import { setArticle, setError } from "./articleSlice";
+import { setArticle, setError, setLoading } from "./articleSlice";
 import { Dispatch } from "@reduxjs/toolkit";
 
 
 export const actionSendArticle = (url: string) => {
     return async (dispatch: Dispatch) => {
+        if(!url) return dispatch(setError('Please enter a URL'));
+        dispatch(setLoading());
         try {
-            const response = await axios.post<URLResult>(`${import.meta.env.VITE_API_URL}/article`,
+            const response = await axios.post<articleModel>(`${import.meta.env.VITE_API_URL}/article`,
                 { url },
                 {
                     headers: {
@@ -25,6 +27,32 @@ export const actionSendArticle = (url: string) => {
             }))
         } catch (error) {
             console.error("[service]: Error creating article", error);
+            dispatch(setError('An error occurred'));
+        }
+    }
+}
+
+export const actionGetArticle = (id: string) => {
+    return async (dispatch: Dispatch) => {
+        dispatch(setLoading());
+        try {
+            const {data}= await axios.get<articleModel>(`${import.meta.env.VITE_API_URL}/article/${id}`);
+            dispatch(setArticle(data));
+    } catch (error) {
+        console.error("[service]: Error getting article", error);
+        dispatch(setError('An error occurred'));
+        
+    }}
+}
+
+export const actionDeleteArticle = (id: string) => {
+    return async (dispatch: Dispatch) => {
+        dispatch(setLoading());
+        try {
+            await axios.delete<articleModel>(`${import.meta.env.VITE_API_URL}/article/${id}`);
+            dispatch(setArticle({}));
+        } catch (error) {
+            console.error("[service]: Error deleting article", error);
             dispatch(setError('An error occurred'));
         }
     }
