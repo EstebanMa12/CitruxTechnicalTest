@@ -20,11 +20,18 @@ const SummaryDisplay = () => {
 
   const chatContainerRef = useRef<HTMLDivElement | null>(null);
 
+  // Efecto para obtener el artículo
   useEffect(() => {
-    dispatch(actionGetArticle(id ?? ""));
-    if (queries && id) {
-      dispatch(getQuerybyArticleId(id));
-    }
+      if (id) {
+          dispatch(actionGetArticle(id));
+      }
+  }, [dispatch, id]);
+
+  // Efecto para obtener las consultas
+  useEffect(() => {
+      if (queries && id) {
+          dispatch(getQuerybyArticleId(id));
+      }
   }, [dispatch, id, queries]);
 
   const submit = (event: any) => {
@@ -41,11 +48,12 @@ const SummaryDisplay = () => {
     chatContainerRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
-  const deleteArticle = (event:any) =>{
+  const deleteArticle = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
-    dispatch(actionDeleteArticle(id ?? ""));
-  }
-
+    if (id) {
+        dispatch(actionDeleteArticle(id));
+    }
+}
   return (
     <>
       <div className="header">
