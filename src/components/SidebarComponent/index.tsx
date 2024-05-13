@@ -7,7 +7,6 @@ import { Link } from "react-router-dom";
 import ArrowRightOutlinedIcon from '@mui/icons-material/ArrowRightOutlined';
 import MenuOpenOutlinedIcon from '@mui/icons-material/MenuOpenOutlined';
 import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
-
 import { getArticles } from "../../redux/articles/articlesThunks";
 import "./styles.sass";
 
@@ -29,8 +28,9 @@ const SidebarComponent = () => {
     setCollapsed(!collapsed);
   };
 
-  const handleArticleClick = (articleId: any) => {
+  const handleArticleClick = async (articleId: any) => {
     setSelectedArticleId(articleId);
+
   };
 
 

@@ -20,6 +20,7 @@ import Swal from 'sweetalert2'
 const SummaryDisplay = () => {
   const { id } = useParams();
   const [message, setMessage] = useState<string>("");
+  const [loading, setLoading] = useState(false);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -29,30 +30,48 @@ const SummaryDisplay = () => {
   const chatContainerRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
+    const getArticle = async () => {
     if (id) {
-      dispatch(actionGetArticle(id));
-    }
+      await dispatch(actionGetArticle(id));
+    }}
+    getArticle()
   }, [dispatch, id]);
 
   useEffect(() => {
-    if (queries && id) {
-      dispatch(getQuerybyArticleId(id));
+    const getQueries = async()=>{
+      try {
+        
+        if (queries && id) {
+          dispatch(getQuerybyArticleId(id));
+        }
+      } catch (error) {
+        console.error(error);
+      }
+
     }
+    getQueries() 
   }, [dispatch, id, queries]);
 
   const submit = (event: any) => {
     event.preventDefault();
-    dispatch(
-      sendQuery(
-        {
-          role: "user",
-          content: message,
-        },
-        id ?? ""
-      )
-    );
-    chatContainerRef.current?.scrollIntoView({ behavior: "smooth" });
-    setMessage("");
+    const sendMessage = async () => {
+      setLoading(true);
+      await dispatch(
+        sendQuery(
+          {
+            role: "user",
+            content: message,
+          },
+          id ?? ""
+        )
+      );
+      chatContainerRef.current?.scrollIntoView({ behavior: "smooth" });
+      setMessage("");
+      setLoading(false);
+    }
+
+    sendMessage()
+
   };
 
   const deleteArticle = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -73,9 +92,9 @@ const SummaryDisplay = () => {
           icon: "success"
         });
         dispatch(actionDeleteArticle(id));
+        navigate("/");
       }
     });
-    navigate("/");
   };
   return (
     <>
@@ -107,6 +126,11 @@ const SummaryDisplay = () => {
                     <span>: </span>
                     <span>{chat.userQuestion.content}</span>
                   </p>
+                  {
+                    loading && <p
+                    className="assistant_msg" 
+                    >Typing...</p>
+                  }
                   <p
                     className={
                       chat.aiResponse.role === "CitruxSystem"
