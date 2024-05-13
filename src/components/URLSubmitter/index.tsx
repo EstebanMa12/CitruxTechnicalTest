@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { useState } from "react";
-// import { URLResult } from '../../models/url.models'
 import "./styles.sass";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -25,18 +24,25 @@ const URLSubmitter = () => {
       setError("Please enter a URL");
       return;
     }
-    try {
-      setLoading(true);
-      dispatch(actionSendArticle(urlInput));
-      if (_id) {
-        navigate(`/article/${_id}`);
+
+    const navigateToNewSummary = async () => {
+      try {
+        setLoading(true);
+        await dispatch(actionSendArticle(urlInput));
+        if (_id) {
+          navigate(`/article/${_id}`);
+        }
+        setLoading(false);
+      } catch (error) {
+   
+        console.error("Error sending article:", error);
+        setError("An error occurred while sending the article.");
       }
-      setLoading(false);
-    } catch (error) {
- 
-      console.error("Error sending article:", error);
-      setError("An error occurred while sending the article.");
     }
+
+    navigateToNewSummary()
+
+
   };
 
   return (

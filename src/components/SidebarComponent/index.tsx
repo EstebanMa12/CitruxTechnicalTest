@@ -29,7 +29,7 @@ const SidebarComponent = () => {
     setCollapsed(!collapsed);
   };
 
-  const handleArticleClick = (articleId) => {
+  const handleArticleClick = (articleId: any) => {
     setSelectedArticleId(articleId);
   };
 

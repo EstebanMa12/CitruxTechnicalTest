@@ -1,30 +1,49 @@
-# React + TypeScript + Vite
+# CITRUX TECHNICAL TEST
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This project leverages the ChatGPT API and the Cheerio library to generate summaries of URLs provided to it. It aims to simplify the process of extracting relevant information from web pages, enhancing accessibility and ease of information retrieval.
 
-Currently, two official plugins are available:
+## Installation 
+To install the project dependencies, ensure you have Yarn installed and follow these steps:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+1. Clone this repository to your local machine.
+2. Navigate to the project directory.
+3. Run yarn to install all dependencies
 
-## Expanding the ESLint configuration
+Important: Ensure you have Node.js version >18.17 installed on your system.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## Usage
 
-- Configure the top-level `parserOptions` property like this:
+1. Create a `.env` file in the project directory.
+2. Inside the `.env` file, set the `VITE_API_URL` variable to the desired API backend route. For practical purposes, the default value is:
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
+```bash 
+  VITE_API_URL = http://localhost:4000/api/v1
+```
+It's important to prefix `VITE_` to the variable name for proper usage.
+
+3. Run the development server with the following command:
+
+```bash
+yarn dev
 ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+4. Navigate to [http://localhost:5173](http://localhost:5173) in your browser to view the project.
+
+## Features
+
+1. The project has a simple UI that allows users to input URLs for summarization.
+2. The project leverages the ChatGPT API to generate summaries of the provided URLs.
+3. The project uses Cheerio to extract relevant information from the web pages.
+4. The project shows the history chats and you can eliminate each one
+
+## Technologies Used
+
+1. [React](https://reactjs.org/)
+2. [TypeScript](https://www.typescriptlang.org/)
+3. [SASS](https://https://sass-lang.com//)
+4. [Vite](https://vitejs.dev/)
+5. [Cheerio](https://cheerio.js.org/)
+6. [ChatGPT API](https://beta.openai.com/docs/)
+
+## Contributors
+1. [Esteban Maya](www.linkedin.com/in/estebanmaya-fullstackdeveloper)
