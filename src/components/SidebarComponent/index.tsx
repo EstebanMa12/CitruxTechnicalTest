@@ -13,6 +13,7 @@ import "./styles.sass";
 
 const SidebarComponent = () => {
   const [collapsed, setCollapsed] = useState(true);
+  const [selectedArticleId, setSelectedArticleId] = useState(null);
   const dispatch = useDispatch();
   const { articles } = useSelector((state: any) => state.articles);
 
@@ -28,6 +29,12 @@ const SidebarComponent = () => {
     setCollapsed(!collapsed);
   };
 
+  const handleArticleClick = (articleId) => {
+    setSelectedArticleId(articleId);
+  };
+
+
+
   return (
     <Sidebar className="SidebarComponent" collapsed={collapsed}>
       <Menu>
@@ -40,7 +47,11 @@ const SidebarComponent = () => {
         <section className="historial_container">
           {articles &&
             articles.map((article: any) => (
-              <Link className="article_link" to={`/article/${article._id}`} key={article._id}>
+              <Link 
+              className={`article_link${selectedArticleId === article._id? '_selected' : ''}`} 
+              to={`/article/${article._id}`} key={article._id}
+              onClick={() => handleArticleClick(article._id)}
+              >
                   <MenuItem
                     icon={<ArrowRightOutlinedIcon />} 
                   >

@@ -4,6 +4,7 @@ import { articleModel } from "../../models/article.models";
 import axios from 'axios'
 import { setArticle, setError, setLoading } from "./articleSlice";
 import { Dispatch } from "@reduxjs/toolkit";
+import { getArticles } from "../articles/articlesThunks";
 
 
 export const actionSendArticle = (url: string) => {
@@ -25,6 +26,7 @@ export const actionSendArticle = (url: string) => {
                 summary: response.data.summary,
                 _id: response.data._id
             }))
+            dispatch(getArticles())
         } catch (error) {
             console.error("[service]: Error creating article", error);
             dispatch(setError('An error occurred'));
@@ -51,6 +53,7 @@ export const actionDeleteArticle = (id: string) => {
         try {
             await axios.delete<articleModel>(`${import.meta.env.VITE_API_URL}/article/${id}`);
             dispatch(setArticle({}));
+            dispatch(getArticles());
         } catch (error) {
             console.error("[service]: Error deleting article", error);
             dispatch(setError('An error occurred'));

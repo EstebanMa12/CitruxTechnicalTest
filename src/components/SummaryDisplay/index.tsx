@@ -4,34 +4,40 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { actionGetArticle, actionDeleteArticle } from "../../redux/article/articleThunks";
+import {
+  actionGetArticle,
+  actionDeleteArticle,
+} from "../../redux/article/articleThunks";
 import {
   getQuerybyArticleId,
   sendQuery,
 } from "../../redux/queries/queryThunks";
+import { useNavigate } from "react-router-dom";
 import "./styles.sass";
+
+import Swal from 'sweetalert2'
+
 const SummaryDisplay = () => {
   const { id } = useParams();
   const [message, setMessage] = useState<string>("");
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { summary } = useSelector((state: any) => state.article);
   const { queries } = useSelector((state: any) => state.query);
 
   const chatContainerRef = useRef<HTMLDivElement | null>(null);
 
-  // Efecto para obtener el artículo
   useEffect(() => {
-      if (id) {
-          dispatch(actionGetArticle(id));
-      }
+    if (id) {
+      dispatch(actionGetArticle(id));
+    }
   }, [dispatch, id]);
 
-  // Efecto para obtener las consultas
   useEffect(() => {
-      if (queries && id) {
-          dispatch(getQuerybyArticleId(id));
-      }
+    if (queries && id) {
+      dispatch(getQuerybyArticleId(id));
+    }
   }, [dispatch, id, queries]);
 
   const submit = (event: any) => {
@@ -46,14 +52,31 @@ const SummaryDisplay = () => {
       )
     );
     chatContainerRef.current?.scrollIntoView({ behavior: "smooth" });
+    setMessage("");
   };
 
   const deleteArticle = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
-    if (id) {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!"
+    }).then((result) => {
+      if (result.isConfirmed && id ) {
+        Swal.fire({
+          title: "Deleted!",
+          text: "Your file has been deleted.",
+          icon: "success"
+        });
         dispatch(actionDeleteArticle(id));
-    }
-}
+      }
+    });
+    navigate("/");
+  };
   return (
     <>
       <div className="header">
@@ -62,10 +85,9 @@ const SummaryDisplay = () => {
           <p>Article ID: {id}</p>
         </div>
         <div className="delete">
-          <button 
-          className="delete_button"
-          onClick={deleteArticle}
-          >Delete</button>
+          <button className="delete_button" onClick={deleteArticle}>
+            Delete
+          </button>
         </div>
       </div>
       <div ref={chatContainerRef} className="chat_container">

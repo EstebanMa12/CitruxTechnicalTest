@@ -11,7 +11,7 @@ const URLSubmitter = () => {
   const [urlInput, setUrlInput] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  // const [result, setResult] = useState<URLResult | null>(null);
+ 
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -25,11 +25,18 @@ const URLSubmitter = () => {
       setError("Please enter a URL");
       return;
     }
-    dispatch(actionSendArticle(urlInput));
-
-    setLoading(true);
-    navigate(`/article/${_id}`);
-    setLoading(false);
+    try {
+      setLoading(true);
+      dispatch(actionSendArticle(urlInput));
+      if (_id) {
+        navigate(`/article/${_id}`);
+      }
+      setLoading(false);
+    } catch (error) {
+ 
+      console.error("Error sending article:", error);
+      setError("An error occurred while sending the article.");
+    }
   };
 
   return (
